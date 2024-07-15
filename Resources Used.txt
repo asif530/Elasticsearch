@@ -1,0 +1,13 @@
+https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/getting-started-java.html#_searching_documents
+
+Theory
+https://reflectoring.io/spring-boot-elasticsearch/
+https://spring.io/projects/spring-data-elasticsearch
+https://www.baeldung.com/spring-data-elasticsearch-tutorial
+
+Code
+https://github.com/spati-java/spring-boot-java-highlevel-rest-client-elasticsearch/blob/develop/src/main/resources/application.properties
+
+Error Fix
+Java: cannot find symbol class RestHighLevelClient
+https://discuss.elastic.co/t/java-cannot-find-symbol-class-resthighlevelclient/274028
