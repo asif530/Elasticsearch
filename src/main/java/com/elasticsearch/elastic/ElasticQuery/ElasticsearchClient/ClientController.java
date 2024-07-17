@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("elk")
+@RequestMapping("elkClient")
 public class ClientController {
 
     @Autowired
@@ -36,7 +37,7 @@ public class ClientController {
      *     <li><b>todo: Make the mapping dynamic</b></li>
      * </ul>
      */
-    @GetMapping("creteIndex")
+    @PostMapping("creteIndex")
     public void createIndex(String indexName) throws IOException {
         //todo: make the mapping dynamic
         elasticsearchClient.indices().create(i -> i.index(indexName).mappings(m -> m.properties("name", p -> p.text(t -> t)).properties("id", p -> p.integer(ii -> ii))));
