@@ -56,6 +56,21 @@ is equivalent to (Need to test)
 GET /hotel/_search
 "query":{ {"bool":{"should":[{"terms":{"bed_type":["King Bed","Queen Bed"]}}]}}}
 
-Now master doesnot have change of branch.
+Aggregation on fields which are array type
+===========================================
+To perform an aggregation on the bed_type field, which is an array of strings, you can use a terms aggregation. 
+Elasticsearch can handle arrays in a way that each element is treated as a separate value for aggregation purposes.
+GET /hotel/_search
+{
+ "aggs": {
+   "bed_type_count": {
+     "terms": {
+       "field": "bed_type",
+       "size": 5
+     }
+   }
+ }
+}
+It will return the aggregation result of bed_type field. 
 
-
+The change is merged by pulling that branch code in master.
