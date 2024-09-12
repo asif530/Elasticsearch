@@ -56,4 +56,6 @@ is equivalent to (Need to test)
 GET /hotel/_search
 "query":{ {"bool":{"should":[{"terms":{"bed_type":["King Bed","Queen Bed"]}}]}}}
 
+Now master doesnot have change of branch.
+
 
