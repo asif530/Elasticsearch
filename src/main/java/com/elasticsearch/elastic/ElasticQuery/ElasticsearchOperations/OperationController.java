@@ -1,6 +1,7 @@
 package com.elasticsearch.elastic.ElasticQuery.ElasticsearchOperations;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
@@ -68,9 +69,19 @@ public class OperationController {
                 t-> t.field("bed_type").terms(term -> term.value(bed_groups))
         ))));
         NativeQuery nativeQuery = nativeQueryBuilder.build();
+        aggregationOnArrayType();
 
         List<?> searchHits =  elasticsearchOperations.search(nativeQuery, SearchHits.class, IndexCoordinates.of("hotel")).getSearchHits().stream().map(SearchHit::getContent).toList();
         searchHits.stream().filter(x-> Boolean.parseBoolean(x.toString()));
+    }
+
+    private void aggregationOnArrayType(){
+        NativeQueryBuilder nativeQueryBuilder = new NativeQueryBuilder();
+        nativeQueryBuilder.withAggregation("bed_type_count", Aggregation.of(agg-> agg.terms(t->t.field("bed_type"))));
+        NativeQuery nativeQuery = nativeQueryBuilder.build();
+
+        List<?> searchHits = Collections.singletonList(elasticsearchOperations.search(nativeQuery, SearchHits.class, IndexCoordinates.of("hotel")));
+        searchHits.stream().forEach(Object::toString);
     }
 
 }
