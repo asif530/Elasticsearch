@@ -69,6 +69,7 @@ public class OperationController {
                 t-> t.field("bed_type").terms(term -> term.value(bed_groups))
         ))));
         NativeQuery nativeQuery = nativeQueryBuilder.build();
+       //Aggregation on fields
         aggregationOnArrayType();
 
         List<?> searchHits =  elasticsearchOperations.search(nativeQuery, SearchHits.class, IndexCoordinates.of("hotel")).getSearchHits().stream().map(SearchHit::getContent).toList();
