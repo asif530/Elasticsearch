@@ -11,3 +11,10 @@ https://github.com/spati-java/spring-boot-java-highlevel-rest-client-elasticsear
 Error Fix
 Java: cannot find symbol class RestHighLevelClient
 https://discuss.elastic.co/t/java-cannot-find-symbol-class-resthighlevelclient/274028
+
+
+Stuck at percentage count
+https://stackoverflow.com/questions/60684945/what-should-be-the-bucket-path-for-nested-term-aggregation
+https://www.elastic.co/guide/en/elasticsearch/reference/8.1/search-aggregations-bucket-composite-aggregation.html#_early_termination
+https://github.com/elastic/elasticsearch/issues/53215
+https://github.com/elastic/elasticsearch/pull/54161
