@@ -1,10 +1,7 @@
 package com.elasticsearch.elastic.ElasticQuery.ElasticsearchOperations;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
-import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
-import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
-import co.elastic.clients.elasticsearch._types.aggregations.DoubleTermsAggregate;
-import co.elastic.clients.elasticsearch._types.aggregations.FilterAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.*;
 import com.elasticsearch.elastic.Result.SearchHits;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("elkOperations")
@@ -97,11 +95,15 @@ public class OperationController {
         Map<String, ElasticsearchAggregation> mapAggregation = ((ElasticsearchAggregations) container).aggregationsAsMap();
         List<ElasticsearchAggregation> aggregationList = ((ElasticsearchAggregations) container).aggregations();
         Object result = aggregationList.get(0).aggregation().getAggregate()._get();
+        List<?> bucketsList = new ArrayList<>();
+        Map<Integer, String> result1 = new HashMap<>();
 
         if(result instanceof FilterAggregate){
 
-            Aggregate dterm = ((FilterAggregate) result).aggregations().get("star_rating");
-            JsonNode originalJsonNode = mapper.readTree(dterm.dterms().buckets().toString());
+            Object dterm = ((FilterAggregate) result).aggregations().get("star_rating")._get();
+            if(dterm instanceof DoubleTermsAggregate)
+                bucketsList = (((DoubleTermsAggregate) dterm).buckets().array()).stream().toList();
+            //JsonNode originalJsonNode = mapper.readTree(dterm.dterms().buckets().toString());
         }
 
 
