@@ -74,3 +74,117 @@ GET /hotel/_search
 It will return the aggregation result of bed_type field. 
 
 The change is merged by pulling that branch code in master.
+
+When documents has fields which is collection of documents, like
+"priceDetails": {
+            "AED": {
+              "price": 877.5574333160234,
+              "tax": 207.01128805328594,
+              "inclusive": 877.5574333160234,
+              "strikeThroughPrice": 895.1085819823439,
+              "exclusive": 670.5461452627375,
+              "currencySymbol": "د.إ. "
+            },
+            "SGD": {
+              "price": 323.4357424425555,
+              "tax": 76.29682924854522,
+              "inclusive": 323.4357424425555,
+              "strikeThroughPrice": 329.90445729140663,
+              "exclusive": 247.13891319401023,
+              "currencySymbol": "$"
+            }
+         }
+
+Sample Query:
+GET index-name/_search
+{
+  "_source": [
+    "movieId"
+  ],
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "terms": {
+            "movieId": [
+              "542448",
+              "395971",
+              "458842"
+            ]
+          }
+        },
+        {
+          "bool": {
+            "should": [
+              {
+                "range": {
+                  "priceDetails.USD.price": {
+                    "gte": 238,
+                    "lte": 243
+                  }
+                }
+              },
+              {
+                "range": {
+                  "priceDetails.USD.price": {
+                    "gte": 89,
+                    "lte": 92
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
