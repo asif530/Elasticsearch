@@ -1,0 +1,35 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class ElasticsearchFormatter {
+    public static void main(String[] args) throws Exception {
+        // Input Java code as a string
+        String code = "public void method() {\n" +
+                      "    String a = \"asdf\";\n" +
+                      "    System.out.println(a);\n" +
+                      "}";
+
+        // Convert to JSON format for Elasticsearch
+        String jsonPayload = formatForElasticsearch(code);
+
+        // Print the final formatted JSON
+        System.out.println(jsonPayload);
+    }
+
+    public static String formatForElasticsearch(String code) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        // Create JSON structure
+        String json = objectMapper.writeValueAsString(new CodeSnippet(code));
+
+        // Add Elasticsearch request format
+        return "POST my_index/_doc/1\n" + json;
+    }
+
+    static class CodeSnippet {
+        public String codeSnippet;
+
+        public CodeSnippet(String codeSnippet) {
+            this.codeSnippet = codeSnippet;
+        }
+    }
+}
